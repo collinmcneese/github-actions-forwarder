@@ -1,14 +1,17 @@
 name: reflector
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_call:
+    inputs:
+      targetUrl:
+        description: 'The URL to send the event to'
+        required: true
+        type: string
+
   workflow_dispatch:
 
 env:
-  GAR_TARGET_URL: 'http://172.17.0.1:8080/github-webhook/'
+  GAR_TARGET_URL: ${{ github.event.inputs.targetUrl }}
 
 jobs:
   reflect:
