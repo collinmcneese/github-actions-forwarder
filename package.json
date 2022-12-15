@@ -1,0 +1,35 @@
+{
+  "name": "github-actions-reflector",
+  "version": "0.1.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "eslint --ignore-path .eslintignore . ; cspell *.js *.md"
+  },
+  "engines": {
+    "npm": ">=8.0.0",
+    "node": ">=16.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/collinmcneese/github-actions-reflector.git"
+  },
+  "keywords": [
+    "github",
+    "webhook"
+  ],
+  "author": "Collin McNeese <collinmcneese@github.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/collinmcneese/github-actions-reflector/issues"
+  },
+  "homepage": "https://github.com/collinmcneese/github-actions-reflector#readme",
+  "devDependencies": {
+    "cspell": "^6.17.0",
+    "eslint": "^8.29.0",
+    "eslint-config-strongloop": "^2.1.0"
+  },
+  "dependencies": {
+    "request": "^2.88.2"
+  }
+}

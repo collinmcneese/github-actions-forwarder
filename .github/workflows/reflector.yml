@@ -1,0 +1,34 @@
+name: reflector
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  GAR_TARGET_URL: 'http://172.17.0.1:8080/github-webhook/'
+
+jobs:
+  reflect:
+    runs-on: [ self-hosted ]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - run: |
+          echo ${{ github.event_name }}
+          echo ${{ github.event }}
+      - run: npm install request
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            const script = require('./reflector.js')
+
+            let targetUrl = '${{ env.GAR_TARGET_URL }}';
+
+            await script({github, context, targetUrl}).then((result) => {
+              console.log(result);
+            });
