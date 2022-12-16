@@ -8,6 +8,27 @@ Example overview of an implementation which uses reverse proxy or an API gateway
 Example overview of an implementation which uses the GitHub Actions Reflector workflow to route repository webhook events to internal systems:
 <img src="./docs/010.png" alt="reflector-setup">
 
+## Usage
+
+Example workflow for consuming reflector:
+
+```yaml
+name: reflector-call
+
+on:
+  push:
+
+  pull_request:
+  - main
+
+jobs:
+  reflector-call:
+    # Path to reusable workflow
+    uses: collinmcneese/github-actions-reflector/.github/workflows/reflector.yml@main
+    with:
+      targetUrl: 'http://172.17.0.1:8080/github-webhook/'
+```
+
 ## TODO
 
 - [ ] Complete documentation
