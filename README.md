@@ -8,7 +8,7 @@ Example overview of an implementation which uses reverse proxy or an API gateway
 Example overview of an implementation which uses the GitHub Actions Reflector workflow to route repository webhook events to internal systems:
 <img src="./docs/010.png" alt="reflector-setup">
 
-## TODO:
+## TODO
 
 - [ ] Complete documentation
 - [ ] Add logic for handling secrets to downstream webhook targets
