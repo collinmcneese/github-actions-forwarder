@@ -4,7 +4,7 @@ module.exports = async({github, context, targetUrl}) => {
 
   function validateUrl(urlString) {
     try {
-      URL(urlString);
+      new URL(urlString); // eslint-disable-line no-new
       return true;
     } catch (err) {
       throw new Error(`Invalid URL: ${urlString} \n ${err}`);
