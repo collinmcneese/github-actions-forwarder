@@ -1,4 +1,18 @@
 module.exports = async({github, context, targetUrl}) => {
+  // Validate that targetUrl is a valid URL
+  const URL = require('url').URL;
+
+  function validateUrl(urlString) {
+    try {
+      URL(urlString);
+      return true;
+    } catch (err) {
+      throw new Error(`Invalid URL: ${urlString}`);
+    }
+  }
+
+  validateUrl(targetUrl);
+
   const request = require('request');
 
   let options = {

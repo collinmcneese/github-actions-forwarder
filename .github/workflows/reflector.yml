@@ -4,11 +4,16 @@ on:
   workflow_call:
     inputs:
       targetUrl:
-        description: 'The URL to send the event to'
+        description: 'The event target URL.'
         required: true
         type: string
 
   workflow_dispatch:
+    inputs:
+      targetUrl:
+        description: 'The event target URL.'
+        required: true
+        type: string
 
 env:
   GAR_TARGET_URL: ${{ github.event.inputs.targetUrl }}
