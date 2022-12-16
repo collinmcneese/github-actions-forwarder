@@ -2,6 +2,8 @@
 
 GitHub Actions workflow meant to run on self-hosted runners to leverage internal or private tooling (such as CICD systems) with GitHub cloud-hosted repositories without the need to use reverse proxy implementations.
 
+This repository is a work-in-progress.  See [TODOs](#todos)
+
 ---
 
 Example overview of an implementation which uses reverse proxy or an API gateway to allow webhook traffic from GitHub cloud repositories to internal systems.  In this setup, webhook events are sent from github.com to a reverse proxy or API gateway which are routed to an internal CICD system.  This example pattern becomes more complicated when adding additional reliability measures in place such as webhook notifications (success or failure), retransmissions and potentially a queueing mechanism at the API gateway layer to handle traffic bursts and scale as required.
@@ -34,7 +36,7 @@ jobs:
       targetUrl: 'http://172.17.0.1:8080/github-webhook/'
 ```
 
-## TODO
+## TODOs
 
 - [ ] Complete documentation
 - [ ] Add logic for handling secrets to downstream webhook targets
