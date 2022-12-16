@@ -34,7 +34,7 @@ module.exports = async({github, context, targetUrl}) => {
       } else if (response.statusCode < 200 || response.statusCode >= 300) {
         reject(new Error(`Error sending payload to ${targetUrl}: ${response.statusCode} - ${response.statusMessage}`));
       } else {
-        resolve(`Payload sent to ${targetUrl}`);
+        resolve(`Payload sent to ${targetUrl} \n response: ${response.statusCode} - ${response.statusMessage}`);
       }
     });
   });
