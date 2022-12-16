@@ -7,7 +7,7 @@ module.exports = async({github, context, targetUrl}) => {
       URL(urlString);
       return true;
     } catch (err) {
-      throw new Error(`Invalid URL: ${urlString}`);
+      throw new Error(`Invalid URL: ${urlString} \n ${err}`);
     }
   }
 
