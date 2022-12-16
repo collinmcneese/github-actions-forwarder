@@ -28,6 +28,8 @@ module.exports = async({github, context, targetUrl}) => {
 
   // Send the request
   return new Promise((resolve, reject) => {
+    console.log(`Sending payload to ${targetUrl} with options: ${JSON.stringify(options.headers)}`);
+
     request(options, (error, response, body) => {
       if (error) {
         reject(error);
