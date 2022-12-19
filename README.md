@@ -23,10 +23,7 @@ Example workflow for consuming reflector:
 name: reflector-call
 
 on:
-  push:
-
   pull_request:
-  - main
 
 jobs:
   reflector-call:
