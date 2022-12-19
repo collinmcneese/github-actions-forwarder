@@ -1,0 +1,16 @@
+name: GitHub Actions Reflector
+description: Actions workflow for redirecting GitHub Actions event payloads to downstream applications.
+author: 'Collin McNeese'
+branding:
+  icon: 'fast-forward'
+  color: 'blue'
+inputs:
+  targetUrl:
+    description: 'The event target URL.'
+    required: true
+runs:
+  using: "composite"
+  steps:
+  - uses: ./.github/workflows/reflector.js
+    with:
+      targetUrl: ${{ inputs.targetUrl }}
