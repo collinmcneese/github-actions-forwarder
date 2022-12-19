@@ -23,8 +23,6 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
-            const script = require('./reflector.js')
-
             let targetUrl = '${{ env.GAR_TARGET_URL }}';
 
             // Validate that targetUrl is a valid URL
