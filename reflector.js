@@ -46,4 +46,4 @@ async function reflector({github, context, targetUrl}) {
 
 module.exports = {
   reflector,
-}
+};
