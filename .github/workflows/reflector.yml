@@ -71,10 +71,14 @@ jobs:
               });
             };
 
-            await reflector({github, context, targetUrl}).then((result) => {
-              console.log(result);
-              return result;
-            });
+            // await reflector({github, context, targetUrl}).then((result) => {
+            //   console.log(result);
+            //   return result;
+            // });
+
+            const result = await reflector({github, context, targetUrl});
+            console.log(result);
+            return result;
       - name: output-summary
         if: always()
         run: echo ${{ steps.reflector-run.outputs.result }} >> $GITHUB_STEP_SUMMARY
