@@ -81,4 +81,4 @@ jobs:
             return result;
       - name: output-summary
         if: always()
-        run: echo ${{ steps.reflector-run.outputs.result }} >> $GITHUB_STEP_SUMMARY
+        run: echo "${{ steps.reflector-run.outputs.result }}" >> $GITHUB_STEP_SUMMARY
