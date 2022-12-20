@@ -8,10 +8,10 @@ inputs:
   targetUrl:
     description: 'The event target URL.'
     required: true
-  runner-labels:
-    description: 'The runner label(s) to use.'
+  runner-label:
+    description: 'The runner label to use.'
     required: false
-    default: '[ self-hosted ]'
+    default: 'self-hosted'
 runs:
   using: "composite"
   steps:

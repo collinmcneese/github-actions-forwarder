@@ -7,10 +7,10 @@ on:
         description: 'The event target URL.'
         required: true
         type: string
-      runner-labels:
-        description: 'The runner label(s) to use.'
+      runner-label:
+        description: 'The runner label to use.'
         required: false
-        default: '[ self-hosted ]'
+        default: 'self-hosted'
         type: string
 
 env:
@@ -18,7 +18,7 @@ env:
 
 jobs:
   reflect:
-    runs-on: ${{ inputs.runner-labels }}
+    runs-on: ${{ inputs.runner-label }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
