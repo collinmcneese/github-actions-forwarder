@@ -7,13 +7,18 @@ on:
         description: 'The event target URL.'
         required: true
         type: string
+      runner-labels:
+        description: 'The runner label(s) to use.'
+        required: false
+        default: '[ self-hosted ]'
+        type: string
 
 env:
   GAR_TARGET_URL: ${{ inputs.targetUrl }}
 
 jobs:
   reflect:
-    runs-on: [ self-hosted ]
+    runs-on: ${{ inputs.runner-labels }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -70,11 +75,6 @@ jobs:
                 });
               });
             };
-
-            // await reflector({github, context, targetUrl}).then((result) => {
-            //   console.log(result);
-            //   return result;
-            // });
 
             const result = await reflector({github, context, targetUrl});
             console.log(result);
