@@ -73,6 +73,7 @@ jobs:
 
             await reflector({github, context, targetUrl}).then((result) => {
               console.log(result);
+              return result;
             });
       - name: output-summary
         if: always()
