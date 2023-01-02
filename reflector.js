@@ -9,7 +9,7 @@ async function reflector({github, context, targetUrl}) {
       new URL(urlString); // eslint-disable-line no-new
       return true;
     } catch (err) {
-      throw new Error(`Invalid URL: ${urlString} \n ${err}`);
+      throw new Error(`Invalid targetUrl: ${urlString} \n ${err}`);
     }
   }
 
