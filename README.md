@@ -1,4 +1,4 @@
-[![CodeQL](https://github.com/collinmcneese/github-actions-reflector/actions/workflows/codeql.yml/badge.svg)](https://github.com/collinmcneese/github-actions-reflector/actions/workflows/codeql.yml)
+[![CodeQL](https://github.com/collinmcneese/github-actions-reflector/actions/workflows/codeql.yml/badge.svg)](https://github.com/collinmcneese/github-actions-reflector/actions/workflows/codeql.yml) [![ci](https://github.com/collinmcneese/github-actions-reflector/actions/workflows/ci.yml/badge.svg)](https://github.com/collinmcneese/github-actions-reflector/actions/workflows/ci.yml)
 
 # GitHub Actions Reflector
 

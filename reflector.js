@@ -1,4 +1,5 @@
 // reflector.js
+// This file is not currently used by this repository and is a placeholder for future use.
 
 async function reflector({github, context, targetUrl}) {
   // Validate that targetUrl is a valid URL
