@@ -1,3 +1,5 @@
+[![CodeQL](https://github.com/collinmcneese/github-actions-reflector/actions/workflows/codeql.yml/badge.svg)](https://github.com/collinmcneese/github-actions-reflector/actions/workflows/codeql.yml)
+
 # GitHub Actions Reflector
 
 GitHub Actions workflow meant to run on self-hosted runners to leverage internal or private tooling (such as CICD systems) with GitHub cloud-hosted repositories without the need to use reverse proxy implementations.
@@ -13,6 +15,7 @@ Example overview of an implementation which uses reverse proxy or an API gateway
 ---
 
 Example overview of an implementation which uses the Actions Reflector workflow to route repository webhook events to internal systems.  Actions Reflector is executed as a GitHub Actions workflow from `on:` events such as `push:` or `pull_request:` on self-hosted runners, routing event payloads to downstream target systems.  This configuration leverages queueing, notification and retransmission capabilities of GitHub Actions and leverages self-hosted runners to prevent the need for ingress traffic initiation at a network edge.
+
 <img src="./docs/010.png" alt="reflector-setup">
 
 ## Usage
@@ -24,6 +27,7 @@ name: reflector-call
 
 on:
   pull_request:
+  issue:
 
 jobs:
   reflector-call:
