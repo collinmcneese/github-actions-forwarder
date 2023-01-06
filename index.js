@@ -4,7 +4,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const request = require('request');
 
-async function reflector({github, context, targetUrl}) {
+async function reflector({context, targetUrl}) {
   // Validate that targetUrl is a valid URL
   const URL = require('url').URL;
 
@@ -46,4 +46,4 @@ async function reflector({github, context, targetUrl}) {
   });
 };
 
-reflector({github, context: github.context, targetUrl: core.getInput('targetUrl')});
+reflector({context: github.context, targetUrl: core.getInput('targetUrl')});
