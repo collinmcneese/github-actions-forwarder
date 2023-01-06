@@ -2,9 +2,11 @@
 
 # GitHub Actions Reflector
 
-GitHub Actions workflow meant to run on self-hosted runners to leverage internal or private tooling (such as CICD systems) with GitHub cloud-hosted repositories without the need to use reverse proxy implementations.
+GitHub Actions workflow meant to run on self-hosted runners to leverage internal or private tooling (such as CICD systems) with GitHub  repositories without the need to use reverse proxy implementations.
 
 This repository is a work-in-progress.  See [TODOs](#todos)
+
+The contents of this repository are individually maintained and are not a direct contribution from GitHub as an organization.  References to `GitHub Actions` in terminology in this repository are for reference only to GitHub technologies and in no way associated with official branding or supportability.
 
 ## Usage
 
@@ -52,6 +54,7 @@ Example overview of an implementation which uses reverse proxy or an API gateway
 ## TODOs
 
 - [ ] Complete documentation
-- [ ] Add logic for handling secrets to downstream webhook targets
+- [X] Add logic for handling secrets to downstream webhook targets
 - [ ] Add code testing
 - [ ] Add quick setup example references for easy testing
+- [ ] Add URL filtering capability to handle controlling valid URL targets via configuration (allow-list).
