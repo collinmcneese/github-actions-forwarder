@@ -3,8 +3,15 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const request = require('request');
+const crypto = require('crypto');
+
+// Parse inputs
+const targetUrl = core.getInput('target-url');
+const webhookSecret = core.getInput('webhook-secret');
 
 async function reflector({context, targetUrl}) {
+  let payloadJson = JSON.stringify(context.payload, undefined, 2);
+
   // Validate that targetUrl is a valid URL
   const URL = require('url').URL;
 
@@ -19,6 +26,8 @@ async function reflector({context, targetUrl}) {
 
   validateUrl(targetUrl);
 
+  // Build request options
+  // Include the signature in the headers, if a webhookSecret was provided
   let options = {
     url: targetUrl,
     method: 'POST',
@@ -27,8 +36,14 @@ async function reflector({context, targetUrl}) {
       'Content-Type': 'application/json',
       'Content-Length': context.payload.length,
     },
-    body: JSON.stringify(context.payload),
+    body: payloadJson,
   };
+
+  // Build GitHub signature headers with secret
+  if (webhookSecret) {
+    options.headers['X-Hub-Signature'] = `sha1=${crypto.createHmac('sha1', webhookSecret).update(payloadJson).digest('hex')}`;
+    options.headers['X-Hub-Signature-256'] = `sha256=${crypto.createHmac('sha256', webhookSecret).update(payloadJson).digest('hex')}`;
+  }
 
   // Send the request
   return new Promise((resolve, reject) => {
@@ -46,7 +61,8 @@ async function reflector({context, targetUrl}) {
   });
 };
 
-reflector({context: github.context, targetUrl: core.getInput('targetUrl')}).then((result) => {
+// Run the Reflector action
+reflector({context: github.context, targetUrl: targetUrl}).then((result) => {
   console.log(result);
 
   core.summary

@@ -8,6 +8,13 @@ This repository is a work-in-progress.  See [TODOs](#todos)
 
 ## Usage
 
+### Inputs
+
+- `target-url`: **String**, **Required**, The target URL destination where webhook event payloads will be reflected to.
+- `webhook-secret`: **String**, **Optional**, Secret data value to use for webhook payload.  Populates `X-Hub-Signature` and `X-Hub-Signature-256` header values. See [Securing Your Webhooks](https://docs.github.com/en/developers/webhooks-and-events/webhooks/securing-your-webhooks) for additional context.
+
+### Example
+
 Example workflow for consuming reflector:
 
 ```yaml
@@ -23,7 +30,7 @@ jobs:
     - name: GitHub Actions Reflector
       uses: collinmcneese/github-actions-reflector@main
       with:
-        targetUrl: 'http://172.17.0.1:8080/github-webhook/'
+        target-url: 'http://172.17.0.1:8080/github-webhook/'
 ```
 
 ## Why Does This Exist?

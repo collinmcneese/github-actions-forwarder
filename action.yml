@@ -5,13 +5,12 @@ branding:
   icon: 'fast-forward'
   color: 'blue'
 inputs:
-  targetUrl:
+  target-url:
     description: 'The event target URL.'
     required: true
-  runner-label:
-    description: 'The runner label to use.'
+  webhook-secret:
+    description: 'The secret to use for signing the event payload.'
     required: false
-    default: 'self-hosted'
 runs:
   using: 'node16'
   main: 'dist/index.js'
