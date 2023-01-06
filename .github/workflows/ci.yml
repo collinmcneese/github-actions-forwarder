@@ -7,6 +7,7 @@
       - main
       paths-ignore:
         - '**.md'
+        - '.github/workflows/codeql.yml'
     push:
       paths-ignore:
       - '**.md'
