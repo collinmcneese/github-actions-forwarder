@@ -27,14 +27,15 @@ name: reflector-call
 
 on:
   pull_request:
-  issue:
 
 jobs:
   reflector-call:
-    # Path to reusable workflow
-    uses: collinmcneese/github-actions-reflector/.github/workflows/reflector.yml@main
-    with:
-      targetUrl: 'http://172.17.0.1:8080/github-webhook/'
+    runs-on: self-hosted
+    steps:
+    - name: GitHub Actions Reflector
+      uses: collinmcneese/github-actions-reflector@main
+      with:
+        targetUrl: 'http://172.17.0.1:8080/github-webhook/'
 ```
 
 ## TODOs

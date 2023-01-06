@@ -42499,6 +42499,8 @@ async function reflector({context, targetUrl}) {
 };
 
 reflector({context: github.context, targetUrl: core.getInput('targetUrl')}).then((result) => {
+  console.log(result);
+
   core.summary
     .addHeading('Results')
     .addRaw(result)
