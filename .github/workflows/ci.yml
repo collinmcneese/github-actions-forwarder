@@ -3,7 +3,13 @@
 
   on:
     pull_request:
-      branches: [ main ]
+      branches:
+      - main
+      paths-ignore:
+        - '**.md'
+    push:
+      paths-ignore:
+      - '**.md'
     workflow_dispatch:
 
   jobs:
@@ -18,7 +24,15 @@
           uses: actions/setup-node@v3
           with:
             node-version: ${{ matrix.node-version }}
-        - name: npm install
-          run: npm install
+        - name: Install Dependencies
+          run: npm ci
         - name: npm test
           run: npm test
+        - name: Verify dist is up to date
+          run: |
+            if [ "$(git diff --ignore-space-at-eol dist/ | wc -l)" -gt "0" ]; then
+              echo "Detected uncommitted changes after build.  See status below:"
+              git diff
+              exit 1
+            fi
+          id: diff
