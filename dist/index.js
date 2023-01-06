@@ -42498,7 +42498,12 @@ async function reflector({context, targetUrl}) {
   });
 };
 
-reflector({context: github.context, targetUrl: core.getInput('targetUrl')});
+reflector({context: github.context, targetUrl: core.getInput('targetUrl')}).then((result) => {
+  core.summary
+    .addHeading('Results')
+    .addRaw(result)
+    .write();
+});
 
 })();
 
