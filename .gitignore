@@ -3,6 +3,7 @@
 *.env
 *.sqlite
 local*
+node_modules
 
 # Created by https://www.toptal.com/developers/gitignore/api/node,macos,windows,visualstudiocode,yarn
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,macos,windows,visualstudiocode,yarn
@@ -130,7 +131,6 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-dist
 
 # Gatsby files
 .cache/

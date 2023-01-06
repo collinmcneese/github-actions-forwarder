@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "eslint --ignore-path .eslintignore . ; cspell *.js *.md"
+    "test": "eslint --ignore-path .eslintignore . ; cspell *.js *.md",
+    "build": "ncc build index.js --license licenses.txt"
   },
   "engines": {
     "npm": ">=8.0.0",
