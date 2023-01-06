@@ -1,7 +1,10 @@
-// reflector.js
-// This file is not currently used by this repository and is a placeholder for future use.
+// index.js
 
-async function reflector({github, context, targetUrl}) {
+const core = require('@actions/core');
+const github = require('@actions/github');
+const request = require('request');
+
+async function reflector({context, targetUrl}) {
   // Validate that targetUrl is a valid URL
   const URL = require('url').URL;
 
@@ -15,8 +18,6 @@ async function reflector({github, context, targetUrl}) {
   }
 
   validateUrl(targetUrl);
-
-  const request = require('request');
 
   let options = {
     url: targetUrl,
@@ -45,6 +46,11 @@ async function reflector({github, context, targetUrl}) {
   });
 };
 
-module.exports = {
-  reflector,
-};
+reflector({context: github.context, targetUrl: core.getInput('targetUrl')}).then((result) => {
+  console.log(result);
+
+  core.summary
+    .addHeading('Results')
+    .addRaw(result)
+    .write();
+});

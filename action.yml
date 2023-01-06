@@ -13,8 +13,5 @@ inputs:
     required: false
     default: 'self-hosted'
 runs:
-  using: "composite"
-  steps:
-  - uses: ${{ github.action_path }}/.github/workflows/reflector.yml
-    with:
-      targetUrl: ${{ inputs.targetUrl }}
+  using: 'node16'
+  main: 'dist/index.js'
