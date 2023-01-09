@@ -42073,6 +42073,164 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
+/***/ 8917:
+/***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
+
+// reflector.js
+
+const request = __nccwpck_require__(1265);
+const crypto = __nccwpck_require__(6113);
+const URL = (__nccwpck_require__(7310).URL);
+
+// Function to validate that passed URL is a valid URL
+function validateUrl(urlString) {
+  try {
+    new URL(urlString); // eslint-disable-line no-new
+    return true;
+  } catch (err) {
+    throw new Error(`Invalid URL: ${urlString} \n ${err}`);
+  }
+}
+
+// Function to fetch contents of allowListSource and parse into an array
+// Source can be a URL or a file path
+// Format of allowListSource file is newline separated list of URL patterns
+async function fetchAllowListSource(allowListSource) {
+  const fs = __nccwpck_require__(7147);
+
+  return new Promise((resolve, reject) => {
+    if (allowListSource.startsWith('http')) {
+      request(allowListSource, (error, response, body) => {
+        if (error) {
+          reject(error);
+        } else if (response.statusCode < 200 || response.statusCode >= 300) {
+          reject(new Error(`Error fetching allowListSource: ${allowListSource}: ${response.statusCode} - ${response.statusMessage}`));
+        } else {
+          // Remove comments and split into array based on newline
+          resolve(body.split('\n').filter((line) => !line.startsWith('#')).filter((line) => line.length > 0));
+        }
+      });
+    } else {
+      fs.readFile(allowListSource, 'utf8', (err, data) => {
+        if (err) {
+          reject(err);
+        } else {
+          // Remove comments and split into array based on newline
+          resolve(data.split('\n').filter((line) => !line.startsWith('#')).filter((line) => line.length > 0));
+        }
+      });
+    }
+  });
+}
+
+// Function to validate that passed target URL is in the passed allowList array via pattern matching
+function validateAllowList(targetUrl, allowList) {
+  let targetUrlObj = new URL(targetUrl);
+
+  for (let i = 0; i < allowList.length; i++) {
+    let allowListUrlObj = new URL(allowList[i]);
+
+    if (targetUrlObj.hostname === allowListUrlObj.hostname) {
+      return true;
+    }
+    // support for wildcard partial matching in allowList
+    if (allowListUrlObj.hostname.startsWith('*')) {
+      let wildcard = allowListUrlObj.hostname.replace('*', '');
+      if (targetUrlObj.hostname.endsWith(wildcard)) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
+// Function to return webhook signature value
+// Specify sha1 or sha256
+function getWebhookSignature(payload, secret, algorithm) {
+  if (algorithm !== 'sha1' && algorithm !== 'sha256') {
+    throw new Error(`Invalid algorithm: ${algorithm} \n Must be sha1 or sha256`);
+  }
+
+  return `${algorithm}=${crypto.createHmac(algorithm, secret).update(payload).digest('hex')}`;
+}
+
+// Function to return Request object with passed context, targetUrl and webhookSecret
+function getRequestOptions(context, targetUrl, webhookSecret) {
+  let payloadJson = JSON.stringify(context.payload, undefined, 2);
+
+  // Build request options
+  // Include the signature in the headers, if a webhookSecret was provided
+  let options = {
+    url: targetUrl,
+    method: 'POST',
+    headers: {
+      'X-GitHub-Event': context.eventName,
+      'Content-Type': 'application/json',
+      'Content-Length': context.payload.length,
+    },
+    body: payloadJson,
+  };
+
+  // Build GitHub signature headers with secret
+  if (webhookSecret) {
+    options.headers['X-Hub-Signature'] = getWebhookSignature(payloadJson, webhookSecret, 'sha1');
+    options.headers['X-Hub-Signature-256'] = getWebhookSignature(payloadJson, webhookSecret, 'sha256');
+  }
+
+  return options;
+}
+
+// Main Reflector function
+async function reflector({context, targetUrl, webhookSecret, allowListSource}) {
+  // Validate that targetUrl is a valid URL
+  validateUrl(targetUrl);
+
+  // If allowListSource is provided, fetch the allowList and validate that targetUrl is in the allowList
+  if (allowListSource) {
+    let allowList = await fetchAllowListSource(allowListSource);
+
+    if (!validateAllowList(targetUrl, allowList)) {
+      throw new Error(`targetUrl: ${targetUrl} is not in allowListSource: ${allowListSource}`);
+    } else {
+      console.log(`targetUrl: ${targetUrl} is in allowListSource: ${allowListSource}`);
+    }
+  }
+
+  // Build request options
+  let options = getRequestOptions(context, targetUrl, webhookSecret);
+
+  // Send the request
+  return new Promise((resolve, reject) => {
+    request(options, (error, response, body) => {
+      if (error) {
+        reject(error);
+      } else if (response.statusCode < 200 || response.statusCode >= 300) {
+        reject(new Error(`Error sending payload to ${targetUrl}: ${response.statusCode} \n ${response.statusMessage}`));
+      } else {
+        resolve(`Payload sent to ${targetUrl} \n response: ${response.statusCode} - ${response.statusMessage}`);
+      }
+    });
+  });
+};
+
+// Export private functions for testing
+const reflectorPrivate = {
+  validateUrl,
+  fetchAllowListSource,
+  validateAllowList,
+  getWebhookSignature,
+  getRequestOptions,
+};
+
+module.exports = {
+  reflectorPrivate,
+  reflector,
+};
+
+
+/***/ }),
+
 /***/ 1214:
 /***/ ((module) => {
 
@@ -42454,71 +42612,23 @@ var __webpack_exports__ = {};
 
 const core = __nccwpck_require__(9991);
 const github = __nccwpck_require__(6140);
-const request = __nccwpck_require__(1265);
-const crypto = __nccwpck_require__(6113);
+const { reflector } = __nccwpck_require__(8917);
 
 // Parse inputs
 const targetUrl = core.getInput('target-url');
 const webhookSecret = core.getInput('webhook-secret');
-
-async function reflector({context, targetUrl}) {
-  let payloadJson = JSON.stringify(context.payload, undefined, 2);
-
-  // Validate that targetUrl is a valid URL
-  const URL = (__nccwpck_require__(7310).URL);
-
-  function validateUrl(urlString) {
-    try {
-      new URL(urlString); // eslint-disable-line no-new
-      return true;
-    } catch (err) {
-      throw new Error(`Invalid targetUrl: ${urlString} \n ${err}`);
-    }
-  }
-
-  validateUrl(targetUrl);
-
-  // Build request options
-  // Include the signature in the headers, if a webhookSecret was provided
-  let options = {
-    url: targetUrl,
-    method: 'POST',
-    headers: {
-      'X-GitHub-Event': context.eventName,
-      'Content-Type': 'application/json',
-      'Content-Length': context.payload.length,
-    },
-    body: payloadJson,
-  };
-
-  // Build GitHub signature headers with secret
-  if (webhookSecret) {
-    options.headers['X-Hub-Signature'] = `sha1=${crypto.createHmac('sha1', webhookSecret).update(payloadJson).digest('hex')}`;
-    options.headers['X-Hub-Signature-256'] = `sha256=${crypto.createHmac('sha256', webhookSecret).update(payloadJson).digest('hex')}`;
-  }
-
-  // Send the request
-  return new Promise((resolve, reject) => {
-    console.log(`Sending payload to ${targetUrl} with options: ${JSON.stringify(options.headers)}`);
-
-    request(options, (error, response, body) => {
-      if (error) {
-        reject(error);
-      } else if (response.statusCode < 200 || response.statusCode >= 300) {
-        reject(new Error(`Error sending payload to ${targetUrl}: ${response.statusCode} - ${response.statusMessage}`));
-      } else {
-        resolve(`Payload sent to ${targetUrl} \n response: ${response.statusCode} - ${response.statusMessage}`);
-      }
-    });
-  });
-};
+const allowListSource = core.getInput('allow-list-source');
 
 // Run the Reflector action
-reflector({context: github.context, targetUrl: targetUrl}).then((result) => {
+reflector({
+  context: github.context,
+  targetUrl: targetUrl,
+  webhookSecret: webhookSecret,
+  allowListSource: allowListSource,
+}).then((result) => {
   console.log(result);
 
   core.summary
-    .addHeading('Results')
     .addRaw(result)
     .write();
 });

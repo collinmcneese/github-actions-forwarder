@@ -14,6 +14,17 @@ The contents of this repository are individually maintained and are not a direct
 
 - `target-url`: **String**, **Required**, The target URL destination where webhook event payloads will be reflected to.
 - `webhook-secret`: **String**, **Optional**, Secret data value to use for webhook payload.  Populates `X-Hub-Signature` and `X-Hub-Signature-256` header values. See [Securing Your Webhooks](https://docs.github.com/en/developers/webhooks-and-events/webhooks/securing-your-webhooks) for additional context.
+- `allow-list-source`: **String**, **Optional**, Source location for a newline-delimited list of entries which specify the allow-list for `target-url` filtering.  Example `allow-list` file contents:
+
+    ```plain
+    # example-allow-list.txt
+    # Comment line and blank lines are ignored
+
+    # Entries in this file should be prefixed with transport type (http/https)
+    https://github.com
+    https://api.github.com
+    https://*.github.localdomain
+    ```
 
 ### Example
 
@@ -55,6 +66,6 @@ Example overview of an implementation which uses reverse proxy or an API gateway
 
 - [ ] Complete documentation
 - [X] Add logic for handling secrets to downstream webhook targets
-- [ ] Add code testing
+- [X] Add code testing
 - [ ] Add quick setup example references for easy testing
 - [ ] Add URL filtering capability to handle controlling valid URL targets via configuration (allow-list).

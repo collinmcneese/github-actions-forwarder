@@ -1,0 +1,9 @@
+# This is a comment line which is ignored
+# Blank lines are also ignored
+
+# Lines in this file should be prefixed with transport type (http/https)
+
+https://github.com
+https://api.github.com
+https://*.github.localdomain
+https://smee.io

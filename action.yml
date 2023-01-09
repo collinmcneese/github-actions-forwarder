@@ -11,6 +11,9 @@ inputs:
   webhook-secret:
     description: 'The secret to use for signing the event payload.'
     required: false
+  allow-list-source:
+    description: 'Location to an allow list of target URL entries.'
+    required: false
 runs:
   using: 'node16'
   main: 'dist/index.js'

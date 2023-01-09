@@ -6,8 +6,8 @@
       branches:
       - main
       paths-ignore:
-        - '**.md'
-        - '.github/workflows/codeql.yml'
+      - '**.md'
+      - '.github/workflows/codeql.yml'
     push:
       paths-ignore:
       - '**.md'
