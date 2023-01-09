@@ -12,9 +12,15 @@ The contents of this repository are individually maintained and are not a direct
 
 ### Inputs
 
-- `target-url`: **String**, **Required**, The target URL destination where webhook event payloads will be reflected to.
-- `webhook-secret`: **String**, **Optional**, Secret data value to use for webhook payload.  Populates `X-Hub-Signature` and `X-Hub-Signature-256` header values. See [Securing Your Webhooks](https://docs.github.com/en/developers/webhooks-and-events/webhooks/securing-your-webhooks) for additional context.
-- `allow-list-source`: **String**, **Optional**, Source location(relative file location or URL) for a newline-delimited list of entries which specify the allow-list for `target-url` filtering.
+- `target-url`: **String**, **Required**
+
+  The target URL destination where webhook event payloads will be reflected to.
+- `webhook-secret`: **String**, **Optional**
+
+  Secret data value to use for webhook payload.  Populates `X-Hub-Signature` and `X-Hub-Signature-256` header values. See [Securing Your Webhooks](https://docs.github.com/en/developers/webhooks-and-events/webhooks/securing-your-webhooks) for additional context.
+- `allow-list-source`: **String**, **Optional**
+
+  Source location(relative file location or URL) for a newline-delimited list of entries which specify the allow-list for `target-url` filtering.
   - Example `allow-list` file contents:
 
     ```plain
@@ -45,6 +51,7 @@ jobs:
       uses: collinmcneese/github-actions-reflector@main
       with:
         target-url: 'http://172.17.0.1:8080/github-webhook/'
+        webhook-secret: 'my-secret-value'
 ```
 
 ## Why Does This Exist?
