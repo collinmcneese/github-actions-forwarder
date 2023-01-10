@@ -1,8 +1,8 @@
 {
   "name": "github-actions-reflector",
   "version": "0.4.0",
-  "description": "",
-  "main": "app.js",
+  "description": "Workflow for redirecting GitHub Actions event payloads to downstream applications",
+  "main": "src/index.js",
   "scripts": {
     "test": "eslint --ignore-path .eslintignore . ; cspell *.js *.md ; jest",
     "build": "ncc build src/index.js --license licenses.txt"
