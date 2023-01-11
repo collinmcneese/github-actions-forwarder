@@ -4,10 +4,11 @@
 
 # Wrapper function to run a command and capture the exit code
 function ci-run {
+  echo ":test_tube: $@"
   $@
   local status=$?
   if [ $status -ne 0 ]; then
-    echo "Error: $@"
+    echo "::Error: $@"
     exit $status
   fi
   return $status
