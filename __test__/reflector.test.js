@@ -3,7 +3,13 @@
 const reflector = require('../src/reflector');
 const { validateUrl, fetchAllowListSource, validateAllowList, getWebhookSignature, getRequestOptions } = reflector.reflectorPrivate;
 
-let allowListObject = ['https://github.com', 'https://api.github.com', 'https://*.github.localdomain', 'https://smee.io'];
+let allowListObject = [
+  'https://github.com',
+  'https://api.github.com',
+  'https://*.github.localdomain',
+  'https://smee.io',
+  'https://*.ngrok.io'
+];
 
 describe('validateUrl', () => {
   test('validateUrl() returns true for valid URL', () => {
