@@ -2,7 +2,7 @@
 
 # GitHub Actions Reflector
 
-GitHub Actions workflow meant to run on self-hosted runners to leverage internal or private tooling (such as CICD systems) with GitHub  repositories without the need to use reverse proxy implementations.
+GitHub Actions workflow meant to run on [self-hosted](https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners) runners to leverage internal or private tooling (such as CICD systems) with GitHub repositories without the need to use reverse proxy implementations.  Additionally could be used with [GitHub Larger Runners](https://docs.github.com/en/actions/using-github-hosted-runners/using-larger-runners) with reserved IPs to minimize ingress points and remove the need for self-hosted runner administration and maintenance.
 
 This repository is a work-in-progress.  See [TODOs](#todos)
 
