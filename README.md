@@ -33,9 +33,9 @@ The contents of this repository are individually maintained and are not a direct
     https://*.github.localdomain
     ```
 
-### Example
+### Examples
 
-Example workflow for consuming reflector:
+Example simple workflow for consuming reflector:
 
 ```yaml
 name: reflector-call
@@ -51,7 +51,39 @@ jobs:
       uses: collinmcneese/github-actions-reflector@main
       with:
         target-url: 'http://172.17.0.1:8080/github-webhook/'
-        webhook-secret: 'my-secret-value'
+        webhook-secret: ${{ secrets.REFLECTOR_WEBHOOK_SECRET }}
+```
+
+Example workflow using [variables](https://docs.github.com/en/actions/learn-github-actions/variables) to target requests to different endpoints:
+
+```yaml
+name: reflector-dynamic
+
+on:
+  pull_request:
+  push:
+  issues:
+
+jobs:
+  reflector-call:
+    runs-on: self-hosted
+    steps:
+    - name: Push - Reflector
+      if: |
+        github.event_name == 'push' ||
+        github.event_name == 'pull_request'
+      uses: collinmcneese/github-actions-reflector@main
+      with:
+        target-url: ${{ vars.REFLECTOR_TARGET_PUSH }}
+        webhook-secret: ${{ secrets.REFLECTOR_WEBHOOK_SECRET_PUSH }}
+        allow-list-source: ${{ vars.REFLECTOR_ALLOW_LIST }}
+    - name: Issue - Reflector
+      if: ${{ github.event_name == 'issues' }}
+      uses: collinmcneese/github-actions-reflector@main
+      with:
+        target-url:  ${{ vars.REFLECTOR_TARGET_ISSUES }}
+        webhook-secret: ${{ secrets.REFLECTOR_WEBHOOK_SECRET_ISSUES }}
+        allow-list-source: ${{ vars.REFLECTOR_ALLOW_LIST }}
 ```
 
 ## Why Does This Exist?
