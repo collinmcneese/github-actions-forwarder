@@ -107,5 +107,5 @@ Example overview of an implementation which uses reverse proxy or an API gateway
 - [ ] Complete documentation
 - [X] Add logic for handling secrets to downstream webhook targets
 - [X] Add code testing
-- [ ] Add quick setup example references for easy testing
-- [ ] Add URL filtering capability to handle controlling valid URL targets via configuration (allow-list).
+- [X] Add quick setup example references for easy testing
+- [X] Add URL filtering capability to handle controlling valid URL targets via configuration (allow-list).
