@@ -1,5 +1,5 @@
-name: GitHub Actions Reflector
-description: Actions workflow for redirecting GitHub Actions event payloads to downstream applications.
+name: GitHub Actions Forwarder
+description: Actions workflow for forwarding GitHub Actions event payloads to downstream applications.
 author: 'Collin McNeese'
 branding:
   icon: 'fast-forward'

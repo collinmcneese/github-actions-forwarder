@@ -42073,10 +42073,10 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 8917:
+/***/ 2468:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
-// reflector.js
+// forwarder.js
 
 const request = __nccwpck_require__(1265);
 const crypto = __nccwpck_require__(6113);
@@ -42181,8 +42181,8 @@ function getRequestOptions(context, targetUrl, webhookSecret) {
   return options;
 }
 
-// Main Reflector function
-async function reflector({context, targetUrl, webhookSecret, allowListSource}) {
+// Main Forwarder function
+async function forwarder({context, targetUrl, webhookSecret, allowListSource}) {
   // Validate that targetUrl is a valid URL
   validateUrl(targetUrl);
 
@@ -42215,7 +42215,7 @@ async function reflector({context, targetUrl, webhookSecret, allowListSource}) {
 };
 
 // Export private functions for testing
-const reflectorPrivate = {
+const forwarderPrivate = {
   validateUrl,
   fetchAllowListSource,
   validateAllowList,
@@ -42224,8 +42224,8 @@ const reflectorPrivate = {
 };
 
 module.exports = {
-  reflectorPrivate,
-  reflector,
+  forwarderPrivate,
+  forwarder,
 };
 
 
@@ -42612,15 +42612,15 @@ var __webpack_exports__ = {};
 
 const core = __nccwpck_require__(9991);
 const github = __nccwpck_require__(6140);
-const { reflector } = __nccwpck_require__(8917);
+const { forwarder } = __nccwpck_require__(2468);
 
 // Parse inputs
 const targetUrl = core.getInput('target-url');
 const webhookSecret = core.getInput('webhook-secret');
 const allowListSource = core.getInput('allow-list-source');
 
-// Run the Reflector action
-reflector({
+// Run the Forwarder action
+forwarder({
   context: github.context,
   targetUrl: targetUrl,
   webhookSecret: webhookSecret,

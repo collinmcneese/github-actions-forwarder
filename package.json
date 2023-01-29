@@ -1,5 +1,5 @@
 {
-  "name": "github-actions-reflector",
+  "name": "github-actions-forwarder",
   "version": "1.0.0",
   "description": "Workflow for redirecting GitHub Actions event payloads to downstream applications",
   "main": "src/index.js",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/collinmcneese/github-actions-reflector.git"
+    "url": "git+https://github.com/collinmcneese/github-actions-forwarder.git"
   },
   "keywords": [
     "github",
@@ -22,9 +22,9 @@
   "author": "Collin McNeese <collinmcneese@github.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/collinmcneese/github-actions-reflector/issues"
+    "url": "https://github.com/collinmcneese/github-actions-forwarder/issues"
   },
-  "homepage": "https://github.com/collinmcneese/github-actions-reflector#readme",
+  "homepage": "https://github.com/collinmcneese/github-actions-forwarder#readme",
   "devDependencies": {
     "cspell": "^6.19.2",
     "eslint": "^8.32.0",

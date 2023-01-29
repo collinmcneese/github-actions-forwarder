@@ -1,7 +1,7 @@
-// Tests for functions in reflector.js
+// Tests for functions in forwarder.js
 
-const reflector = require('../src/reflector');
-const { validateUrl, fetchAllowListSource, validateAllowList, getWebhookSignature, getRequestOptions } = reflector.reflectorPrivate;
+const forwarder = require('../src/forwarder');
+const { validateUrl, fetchAllowListSource, validateAllowList, getWebhookSignature, getRequestOptions } = forwarder.forwarderPrivate;
 
 let allowListObject = [
   'https://github.com',

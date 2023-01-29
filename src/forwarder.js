@@ -1,4 +1,4 @@
-// reflector.js
+// forwarder.js
 
 const request = require('request');
 const crypto = require('crypto');
@@ -103,8 +103,8 @@ function getRequestOptions(context, targetUrl, webhookSecret) {
   return options;
 }
 
-// Main Reflector function
-async function reflector({context, targetUrl, webhookSecret, allowListSource}) {
+// Main Forwarder function
+async function forwarder({context, targetUrl, webhookSecret, allowListSource}) {
   // Validate that targetUrl is a valid URL
   validateUrl(targetUrl);
 
@@ -137,7 +137,7 @@ async function reflector({context, targetUrl, webhookSecret, allowListSource}) {
 };
 
 // Export private functions for testing
-const reflectorPrivate = {
+const forwarderPrivate = {
   validateUrl,
   fetchAllowListSource,
   validateAllowList,
@@ -146,6 +146,6 @@ const reflectorPrivate = {
 };
 
 module.exports = {
-  reflectorPrivate,
-  reflector,
+  forwarderPrivate,
+  forwarder,
 };
