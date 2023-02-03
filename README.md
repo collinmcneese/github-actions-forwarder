@@ -2,7 +2,9 @@
 
 # GitHub Actions Forwarder
 
-GitHub Actions workflow meant to run on [self-hosted](https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners) runners to leverage internal or private tooling (such as CICD systems) with GitHub repositories without the need to use reverse proxy implementations.  Additionally could be used with [GitHub Larger Runners](https://docs.github.com/en/actions/using-github-hosted-runners/using-larger-runners) with reserved IPs to minimize ingress points and remove the need for self-hosted runner administration and maintenance.
+GitHub Actions workflow meant to run on [self-hosted](https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners) runners to leverage internal or private tooling (such as CICD systems) with GitHub repositories without the need to configure GitHub webhooks or use reverse-proxy/API-gateway implementations.  Additionally could be used with [GitHub Larger Runners](https://docs.github.com/en/actions/using-github-hosted-runners/using-larger-runners) with reserved IPs to minimize ingress points and remove the need for self-hosted runner administration and maintenance.
+
+This action can work to subscribe to [Repository level events](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#available-events) and deliver a payload to a downstream modeling what a GitHub webhook would look like.  Since this is a Repository-scoped action, it can only subscribe to Repository level events unlike [Organizational and Enterprise webhook event options](https://docs.github.com/en/developers/webhooks-and-events/webhooks/webhook-events-and-payloads) which include additional scopes.
 
 This repository is a work-in-progress.  See [TODOs](#todos)
 
