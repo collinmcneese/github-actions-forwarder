@@ -16,7 +16,7 @@ forwarder({
   webhookSecret: webhookSecret,
   allowListSource: allowListSource,
 }).then((result) => {
-  console.log(result);
+  core.info(result);
 
   core.summary
     .addRaw(result)
