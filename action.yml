@@ -15,5 +15,5 @@ inputs:
     description: 'Location to an allow list of target URL entries.'
     required: false
 runs:
-  using: 'node16'
+  using: 'node20'
   main: 'dist/index.js'

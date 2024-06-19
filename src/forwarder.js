@@ -3,11 +3,12 @@
 const request = require('request');
 const crypto = require('crypto');
 const URL = require('url').URL;
+const console = require('console');
 
 // Function to validate that passed URL is a valid URL
 function validateUrl(urlString) {
   try {
-    new URL(urlString); // eslint-disable-line no-new
+    new URL(urlString);
     return true;
   } catch (err) {
     throw new Error(`Invalid URL: ${urlString} \n ${err}`);
@@ -47,17 +48,17 @@ async function fetchAllowListSource(allowListSource) {
 
 // Function to validate that passed target URL is in the passed allowList array via pattern matching
 function validateAllowList(targetUrl, allowList) {
-  let targetUrlObj = new URL(targetUrl);
+  const targetUrlObj = new URL(targetUrl);
 
   for (let i = 0; i < allowList.length; i++) {
-    let allowListUrlObj = new URL(allowList[i]);
+    const allowListUrlObj = new URL(allowList[i]);
 
     if (targetUrlObj.hostname === allowListUrlObj.hostname) {
       return true;
     }
     // support for wildcard partial matching in allowList
     if (allowListUrlObj.hostname.startsWith('*')) {
-      let wildcard = allowListUrlObj.hostname.replace('*', '');
+      const wildcard = allowListUrlObj.hostname.replace('*', '');
       if (targetUrlObj.hostname.endsWith(wildcard)) {
         return true;
       }
@@ -79,11 +80,11 @@ function getWebhookSignature(payload, secret, algorithm) {
 
 // Function to return Request object with passed context, targetUrl and webhookSecret
 function getRequestOptions(context, targetUrl, webhookSecret) {
-  let payloadJson = JSON.stringify(context.payload, undefined, 2);
+  const payloadJson = JSON.stringify(context.payload, undefined, 2);
 
   // Build request options
   // Include the signature in the headers, if a webhookSecret was provided
-  let options = {
+  const options = {
     url: targetUrl,
     method: 'POST',
     headers: {
@@ -110,7 +111,7 @@ async function forwarder({context, targetUrl, webhookSecret, allowListSource}) {
 
   // If allowListSource is provided, fetch the allowList and validate that targetUrl is in the allowList
   if (allowListSource) {
-    let allowList = await fetchAllowListSource(allowListSource);
+    const allowList = await fetchAllowListSource(allowListSource);
 
     if (!validateAllowList(targetUrl, allowList)) {
       throw new Error(`targetUrl: ${targetUrl} is not in allowListSource: ${allowListSource}`);
@@ -120,11 +121,11 @@ async function forwarder({context, targetUrl, webhookSecret, allowListSource}) {
   }
 
   // Build request options
-  let options = getRequestOptions(context, targetUrl, webhookSecret);
+  const options = getRequestOptions(context, targetUrl, webhookSecret);
 
   // Send the request
   return new Promise((resolve, reject) => {
-    request(options, (error, response, body) => {
+    request(options, (error, response) => {
       if (error) {
         reject(error);
       } else if (response.statusCode < 200 || response.statusCode >= 300) {
