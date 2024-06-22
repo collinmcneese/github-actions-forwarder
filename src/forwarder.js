@@ -1,9 +1,10 @@
 // forwarder.js
 
-import request from 'node:request';
-import crypto from 'node:crypto';
-import { URL } from 'node:url';
-import console from 'node:console';
+import request from 'request';
+import crypto from 'crypto';
+import { URL } from 'url';
+import console from 'console';
+import fs from 'fs';
 
 // Function to validate that passed URL is a valid URL
 function validateUrl(urlString) {
@@ -19,8 +20,6 @@ function validateUrl(urlString) {
 // Source can be a URL or a file path
 // Format of allowListSource file is newline separated list of URL patterns
 async function fetchAllowListSource(allowListSource) {
-  const fs = require('fs');
-
   return new Promise((resolve, reject) => {
     if (allowListSource.startsWith('http')) {
       request(allowListSource, (error, response, body) => {
