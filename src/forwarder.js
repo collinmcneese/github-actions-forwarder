@@ -1,9 +1,9 @@
 // forwarder.js
 
-const request = require('request');
-const crypto = require('crypto');
-const URL = require('url').URL;
-const console = require('console');
+import request from 'node:request';
+import crypto from 'node:crypto';
+import { URL } from 'node:url';
+import console from 'node:console';
 
 // Function to validate that passed URL is a valid URL
 function validateUrl(urlString) {
@@ -146,7 +146,7 @@ const forwarderPrivate = {
   getRequestOptions,
 };
 
-module.exports = {
+export {
   forwarderPrivate,
   forwarder,
 };

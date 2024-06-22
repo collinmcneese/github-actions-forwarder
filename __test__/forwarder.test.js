@@ -1,7 +1,7 @@
 // Tests for functions in forwarder.js
 
-const forwarder = require('../src/forwarder');
-const { validateUrl, fetchAllowListSource, validateAllowList, getWebhookSignature, getRequestOptions } = forwarder.forwarderPrivate;
+import { forwarderPrivate as forwarder } from '../src/forwarder.js';
+const { validateUrl, fetchAllowListSource, validateAllowList, getWebhookSignature, getRequestOptions } = forwarder;
 
 let allowListObject = [
   'https://github.com',
@@ -12,11 +12,11 @@ let allowListObject = [
 ];
 
 describe('validateUrl', () => {
-  test('validateUrl() returns true for valid URL', () => {
+  it('validateUrl() returns true for valid URL', () => {
     expect(validateUrl('https://github.com')).toBe(true);
   });
 
-  test('validateUrl() throws error for invalid URL', () => {
+  it('validateUrl() throws error for invalid URL', () => {
     expect(() => {
       validateUrl('github.com');
     }).toThrow();
@@ -26,7 +26,7 @@ describe('validateUrl', () => {
 describe('fetchAllowListSource', () => {
   let allowListSource = './__test__/allowlist.mock';
 
-  test('fetchAllowListSource() returns an object and that members contain mock values', async () => {
+  it('fetchAllowListSource() returns an object and that members contain mock values', async () => {
     let allowList = await fetchAllowListSource(allowListSource);
 
     expect(typeof allowList).toBe('object');
@@ -38,22 +38,22 @@ describe('fetchAllowListSource', () => {
 describe('validateAllowList', () => {
   let allowList = allowListObject;
 
-  test('validateAllowList() returns true for valid URL', () => {
+  it('validateAllowList() returns true for valid URL', () => {
     expect(validateAllowList('https://api.github.com', allowList)).toBe(true);
   });
 
-  test('validateAllowList() returns true for valid URL with wildcard', () => {
+  it('validateAllowList() returns true for valid URL with wildcard', () => {
     expect(validateAllowList('https://api.github.localdomain', allowList)).toBe(true);
   });
 
-  test('validateAllowList() returns false for invalid URL', () => {
+  it('validateAllowList() returns false for invalid URL', () => {
     expect(validateAllowList('https://invalid.url', allowList)).toBe(false);
   });
 });
 
 describe('getWebhookSignature', () => {
 
-  test('getWebhookSignature() returns a sha1 string with the proper value', () => {
+  it('getWebhookSignature() returns a sha1 string with the proper value', () => {
     let payload = 'payload';
     let secret = 'abc123';
     let algorithm = 'sha1';
@@ -61,7 +61,7 @@ describe('getWebhookSignature', () => {
     expect(getWebhookSignature(payload, secret, algorithm)).toBe(expected);
   });
 
-  test('getWebhookSignature() returns a sha256 string with the proper value', () => {
+  it('getWebhookSignature() returns a sha256 string with the proper value', () => {
     let payload = 'payload';
     let secret = 'abc123';
     let algorithm = 'sha256';
@@ -80,7 +80,7 @@ describe('getRequestOptions', () => {
   let targetUrl = 'https://github.com';
   let webhookSecret = 'abc123';
 
-  test('getRequestOptions() returns an object with the proper values', () => {
+  it('getRequestOptions() returns an object with the proper values', () => {
     let options = getRequestOptions(context, targetUrl, webhookSecret);
     expect(typeof options).toBe('object');
     expect(options.url).toBe(targetUrl);

@@ -1,8 +1,8 @@
 // index.js
 
-const core = require('@actions/core');
-const github = require('@actions/github');
-const { forwarder } = require('./forwarder');
+import * as core from '@actions/core';
+import * as github from '@actions/github';
+import { forwarder } from './forwarder.js';
 
 // Parse inputs
 const targetUrl = core.getInput('target-url');
