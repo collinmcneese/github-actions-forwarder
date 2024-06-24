@@ -19,4 +19,4 @@ cd "$(dirname "$0")/.."
 ci-run npx eslint
 ci-run npx cspell *.js *.md
 ci-run npx markdownlint-cli -c markdownlint.yml *.md
-ci-run npx jest
+ci-run npx mocha ./__test__/**/*.test.js
