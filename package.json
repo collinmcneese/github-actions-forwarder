@@ -1,6 +1,6 @@
 {
   "name": "github-actions-forwarder",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "Workflow for forwarding GitHub Actions event payloads to downstream applications",
   "exports": "./src/index.js",
   "scripts": {
