@@ -28,7 +28,7 @@
   "homepage": "https://github.com/collinmcneese/github-actions-forwarder#readme",
   "devDependencies": {
     "@eslint/js": "^9.13.0",
-    "chai": "^5.1.1",
+    "chai": "^5.1.2",
     "cspell": "^8.15.4",
     "esbuild": "^0.24.0",
     "eslint": "^9.13.0",
