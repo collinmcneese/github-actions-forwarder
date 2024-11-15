@@ -5,15 +5,11 @@
     pull_request:
       branches:
       - main
-      paths-ignore:
-      - '**.md'
-      - '.github/workflows/codeql.yml'
-      - './docs/**'
-    push:
-      paths-ignore:
-      - '**.md'
-      - './docs/**'
-    workflow_dispatch:
+      paths:
+        - 'package*.json'
+        - '**/*.js'
+        - '**/*.ts'
+        - '.github/workflows/ci.yml'
 
   jobs:
     validation:
