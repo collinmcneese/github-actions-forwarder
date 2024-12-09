@@ -33,7 +33,7 @@
     "esbuild": "^0.24.0",
     "eslint": "^9.16.0",
     "markdownlint-cli": "^0.43.0",
-    "mocha": "^10.8.2"
+    "mocha": "^11.0.1"
   },
   "dependencies": {
     "@actions/core": "^1.11.1",
