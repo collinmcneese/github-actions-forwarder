@@ -27,13 +27,13 @@
   },
   "homepage": "https://github.com/collinmcneese/github-actions-forwarder#readme",
   "devDependencies": {
-    "@eslint/js": "^9.25.1",
+    "@eslint/js": "^9.26.0",
     "chai": "^5.2.0",
-    "cspell": "^8.19.3",
+    "cspell": "^8.19.4",
     "esbuild": "^0.25.3",
-    "eslint": "^9.25.1",
+    "eslint": "^9.26.0",
     "markdownlint-cli": "^0.44.0",
-    "mocha": "^11.1.0"
+    "mocha": "^11.2.2"
   },
   "dependencies": {
     "@actions/core": "^1.11.1",
