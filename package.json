@@ -1,15 +1,15 @@
 {
   "name": "github-actions-forwarder",
-  "version": "4.0.1",
+  "version": "5.0.0",
   "description": "Workflow for forwarding GitHub Actions event payloads to downstream applications",
   "exports": "./src/index.js",
   "scripts": {
     "test": "./__test__/ci.sh",
-    "build": "esbuild src/index.js --bundle --outfile=dist/index.js --platform=node --target=node20"
+    "build": "esbuild src/index.js --bundle --outfile=dist/index.js --platform=node --target=node24"
   },
   "engines": {
     "npm": ">=8.0.0",
-    "node": ">=20.0.0"
+    "node": ">=24.0.0"
   },
   "type": "module",
   "repository": {
