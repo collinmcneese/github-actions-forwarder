@@ -36,8 +36,8 @@
     "mocha": "^11.7.5"
   },
   "dependencies": {
-    "@actions/core": "^2.0.1",
-    "@actions/github": "^6.0.1",
+    "@actions/core": "^2.0.2",
+    "@actions/github": "^7.0.0",
     "request": "^2.88.2"
   }
 }
