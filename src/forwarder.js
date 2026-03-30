@@ -1,10 +1,9 @@
 // forwarder.js
 
-import request from 'request';
 import crypto from 'crypto';
 import { URL } from 'url';
 import console from 'console';
-import fs from 'fs';
+import { readFile } from 'fs/promises';
 
 // Function to validate that passed URL is a valid URL
 function validateUrl(urlString) {
@@ -20,29 +19,23 @@ function validateUrl(urlString) {
 // Source can be a URL or a file path
 // Format of allowListSource file is newline separated list of URL patterns
 async function fetchAllowListSource(allowListSource) {
-  return new Promise((resolve, reject) => {
-    if (allowListSource.startsWith('http')) {
-      request(allowListSource, (error, response, body) => {
-        if (error) {
-          reject(error);
-        } else if (response.statusCode < 200 || response.statusCode >= 300) {
-          reject(new Error(`Error fetching allowListSource: ${allowListSource}: ${response.statusCode} - ${response.statusMessage}`));
-        } else {
-          // Remove comments and split into array based on newline
-          resolve(body.split('\n').filter((line) => !line.startsWith('#')).filter((line) => line.length > 0));
-        }
-      });
-    } else {
-      fs.readFile(allowListSource, 'utf8', (err, data) => {
-        if (err) {
-          reject(err);
-        } else {
-          // Remove comments and split into array based on newline
-          resolve(data.split('\n').filter((line) => !line.startsWith('#')).filter((line) => line.length > 0));
-        }
-      });
+  if (allowListSource.startsWith('http')) {
+    const response = await fetch(allowListSource);
+
+    if (!response.ok) {
+      throw new Error(`Error fetching allowListSource: ${allowListSource}: ${response.status} - ${response.statusText}`);
     }
-  });
+
+    const body = await response.text();
+
+    // Remove comments and split into array based on newline
+    return body.split('\n').filter((line) => !line.startsWith('#')).filter((line) => line.length > 0);
+  }
+
+  const data = await readFile(allowListSource, 'utf8');
+
+  // Remove comments and split into array based on newline
+  return data.split('\n').filter((line) => !line.startsWith('#')).filter((line) => line.length > 0);
 }
 
 // Function to validate that passed target URL is in the passed allowList array via pattern matching
@@ -89,7 +82,6 @@ function getRequestOptions(context, targetUrl, webhookSecret) {
     headers: {
       'X-GitHub-Event': context.eventName,
       'Content-Type': 'application/json',
-      'Content-Length': context.payload.length,
     },
     body: payloadJson,
   };
@@ -123,17 +115,17 @@ async function forwarder({context, targetUrl, webhookSecret, allowListSource}) {
   const options = getRequestOptions(context, targetUrl, webhookSecret);
 
   // Send the request
-  return new Promise((resolve, reject) => {
-    request(options, (error, response) => {
-      if (error) {
-        reject(error);
-      } else if (response.statusCode < 200 || response.statusCode >= 300) {
-        reject(new Error(`Error sending payload to ${targetUrl}: ${response.statusCode} \n ${response.statusMessage}`));
-      } else {
-        resolve(`Payload sent to ${targetUrl} \n response: ${response.statusCode} - ${response.statusMessage}`);
-      }
-    });
+  const response = await fetch(options.url, {
+    method: options.method,
+    headers: options.headers,
+    body: options.body,
   });
+
+  if (!response.ok) {
+    throw new Error(`Error sending payload to ${targetUrl}: ${response.status} \n ${response.statusText}`);
+  }
+
+  return `Payload sent to ${targetUrl} \n response: ${response.status} - ${response.statusText}`;
 };
 
 // Export private functions for testing
