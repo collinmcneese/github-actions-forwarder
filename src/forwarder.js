@@ -12,7 +12,7 @@ function validateUrl(urlString) {
     new URL(urlString);
     return true;
   } catch (err) {
-    throw new Error(`Invalid URL: ${urlString} \n ${err}`);
+    throw new Error(`Invalid URL: ${urlString}\n${err}`, { cause: err });
   }
 }
 
