@@ -31,7 +31,7 @@
     "@eslint/js": "^10.0.1",
     "esbuild": "^0.28.0",
     "eslint": "^10.4.0",
-    "vitest": "^4.1.6"
+    "vitest": "^4.1.7"
   },
   "dependencies": {
     "@actions/core": "^3.0.1",
