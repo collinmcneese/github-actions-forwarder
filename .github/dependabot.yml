@@ -1,22 +1,26 @@
 version: 2
 updates:
-  - package-ecosystem: "npm" # See documentation for possible values
-    directory: "/" # Location of package manifests
-    schedule:
-      interval: "weekly"
-    groups:
+- package-ecosystem: "npm"   # See documentation for possible values
+  directory: "/"   # Location of package manifests
+  schedule:
+    interval: "weekly"
+  groups:
       # This is the name of your group, it will be used in PR titles and branch names
-      npm-deps:
+    npm-deps:
         # A pattern can be...
-        patterns:
-          - "*"
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    groups:
+      patterns:
+      - "*"
+  cooldown:
+    default-days: 7
+- package-ecosystem: "github-actions"
+  directory: "/"
+  schedule:
+    interval: "weekly"
+  groups:
       # This is the name of your group, it will be used in PR titles and branch names
-      actions-deps:
+    actions-deps:
         # A pattern can be...
-        patterns:
-          - "*"
+      patterns:
+      - "*"
+  cooldown:
+    default-days: 7
