@@ -30,8 +30,8 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "esbuild": "^0.28.1",
-    "eslint": "^10.4.0",
-    "vitest": "^4.1.7"
+    "eslint": "^10.6.0",
+    "vitest": "^4.1.9"
   },
   "dependencies": {
     "@actions/core": "^3.0.1",
